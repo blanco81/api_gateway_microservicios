@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+sqlalchemy
+sqlalchemy-utils
+alembic
+pydantic
+python-dotenv
+nanoid
+pytz
+itsdangerous
+asyncpg
+psycopg2-binary
+cryptography 
