@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  keycloak-db:
+    image: postgres:15
+    container_name: keycloak-db
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${KEYCLOAK_DB_NAME}
+      POSTGRES_USER: ${KEYCLOAK_DB_USER}
+      POSTGRES_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
+    volumes:
+      - keycloak_pgdata:/var/lib/postgresql/data
+    networks:
+      - medikall-network
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.1
+    container_name: keycloak
+    restart: always
+    command: start-dev
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: keycloak-db
+      KC_DB_URL_PORT: 5432
+      KC_DB_SCHEMA: public
+      KC_DB_USERNAME: ${KEYCLOAK_DB_USER}
+      KC_DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
+      KC_DB_DATABASE: ${KEYCLOAK_DB_NAME}
+    depends_on:
+      - keycloak-db
+    networks:
+      - medikall-network
+
+volumes:
+  keycloak_pgdata:
+
+networks:
+  medikall-network:
+    driver: bridge
+    external: true
