@@ -1,5 +1,7 @@
+from typing import Optional
 from pydantic import BaseModel
 from datetime import date
+from datetime import datetime
 
 class StaffCreate(BaseModel):
     name_complete: str
@@ -7,7 +9,7 @@ class StaffCreate(BaseModel):
     license_number: str
 
 class StaffOut(BaseModel):
-    id: int
+    id: str
     name_complete: str
     specialty: str
     license_number: str
@@ -16,14 +18,24 @@ class StaffOut(BaseModel):
         orm_mode = True
 
 class ShiftCreate(BaseModel):
-    staff_id: int
+    staff_id: str
     shift_date: date
     shift_type: str
 
 class ShiftOut(BaseModel):
-    id: int
+    id: str
     shift_date: date
     shift_type: str
+
+    class Config:
+        orm_mode = True
+        
+class LogOut(BaseModel):
+    id: str
+    action: str
+    date_create: datetime
+    staff_id: Optional[str]
+    shift_id: Optional[str]
 
     class Config:
         orm_mode = True

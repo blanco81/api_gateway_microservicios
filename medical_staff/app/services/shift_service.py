@@ -1,7 +1,9 @@
+from datetime import datetime
 from fastapi import APIRouter, Depends
+import pytz
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from app.model.models import Shift
+from app.model.models import Shift, Log
 from app.schema.staff_models import ShiftCreate, ShiftOut
 from app.db.session import get_db
 
@@ -13,6 +15,16 @@ async def create_shift(data: ShiftCreate, db: AsyncSession = Depends(get_db)):
     db.add(shift)
     await db.commit()
     await db.refresh(shift)
+    
+    shift_log = Log(
+        action=f"Shift {shift.shift_type} con especialista {shift.staff_id}, fue creado.",
+        date_create=datetime.now(pytz.utc),
+        shift_id=shift.id
+    )
+    db.add(shift_log)
+    await db.commit()
+    await db.refresh(shift_log)
+    
     return shift
 
 @router.get("/", response_model=list[ShiftOut])
