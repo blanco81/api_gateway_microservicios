@@ -1,7 +1,9 @@
+from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException
+import pytz
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from app.model.models import MedicalStaff
+from app.model.models import MedicalStaff, Log
 from app.schema.staff_models import StaffCreate, StaffOut
 from app.db.session import get_db
 
@@ -13,6 +15,16 @@ async def create_staff(data: StaffCreate, db: AsyncSession = Depends(get_db)):
     db.add(staff)
     await db.commit()
     await db.refresh(staff)
+    
+    staff_log = Log(
+        action=f"Staff {staff.name_complete} especialista en {staff.specialty}, fue creado.",
+        date_create=datetime.now(pytz.utc),
+        staff_id=staff.id
+    )
+    db.add(staff_log)
+    await db.commit()
+    await db.refresh(staff_log)
+    
     return staff
 
 @router.get("/", response_model=list[StaffOut])
