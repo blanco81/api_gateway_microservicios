@@ -5,7 +5,7 @@ from app.model.models import Log
 from app.schema.staff_models import LogOut
 from app.db.session import get_db
 
-router = APIRouter(prefix="/log", tags=["Medical Staff"])
+router = APIRouter(tags=["Medical Staff"])
 
 
 @router.get("/", response_model=list[LogOut])

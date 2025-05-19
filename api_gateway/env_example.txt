@@ -1,0 +1,4 @@
+KEYCLOAK_SERVER_URL=http://localhost:8080
+KEYCLOAK_REALM=server
+KEYCLOAK_CLIENT_ID=cliente_id
+KEYCLOAK_CLIENT_SECRET=GUba**************

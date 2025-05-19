@@ -7,7 +7,12 @@ from app.model.models import MedicalStaff, Log
 from app.schema.staff_models import StaffCreate, StaffOut
 from app.db.session import get_db
 
-router = APIRouter(prefix="/staff", tags=["Medical Staff"])
+router = APIRouter(tags=["Medical Staff"])
+
+@router.get("/", response_model=list[StaffOut])
+async def list_staff(db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(MedicalStaff))
+    return result.scalars().all()
 
 @router.post("/", response_model=StaffOut)
 async def create_staff(data: StaffCreate, db: AsyncSession = Depends(get_db)):
@@ -27,7 +32,3 @@ async def create_staff(data: StaffCreate, db: AsyncSession = Depends(get_db)):
     
     return staff
 
-@router.get("/", response_model=list[StaffOut])
-async def list_staff(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(MedicalStaff))
-    return result.scalars().all()

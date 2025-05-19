@@ -3,11 +3,17 @@ from fastapi import APIRouter, Depends
 import pytz
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
+from sqlalchemy.orm import selectinload
 from app.model.models import Shift, Log
 from app.schema.staff_models import ShiftCreate, ShiftOut
 from app.db.session import get_db
 
-router = APIRouter(prefix="/shifts", tags=["Shifts"])
+router = APIRouter(tags=["Medical Staff"])
+
+@router.get("/", response_model=list[ShiftOut])
+async def list_shifts(db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(Shift).options(selectinload(Shift.staff)))
+    return result.scalars().all()
 
 @router.post("/", response_model=ShiftOut)
 async def create_shift(data: ShiftCreate, db: AsyncSession = Depends(get_db)):
@@ -27,7 +33,3 @@ async def create_shift(data: ShiftCreate, db: AsyncSession = Depends(get_db)):
     
     return shift
 
-@router.get("/", response_model=list[ShiftOut])
-async def list_shifts(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(Shift))
-    return result.scalars().all()
