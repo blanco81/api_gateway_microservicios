@@ -26,6 +26,7 @@ class ShiftOut(BaseModel):
     id: str
     shift_date: date
     shift_type: str
+    staff: Optional[StaffOut]
 
     class Config:
         orm_mode = True
