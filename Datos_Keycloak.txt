@@ -1,0 +1,36 @@
+Token de User
+
+curl -X POST http://localhost:8080/realms/medikall/protocol/openid-connect/token \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "username=manager" \
+  -d "password=pass1234" \
+  -d "grant_type=password" \
+  -d "client_id=api-gateway" \
+  -d "client_secret=GUbaVtOc3CaN1lC4ujZ5KBdHzMDRZLDH"
+
+Token de Admin
+
+curl -X POST \
+  "http://localhost:8080/realms/master/protocol/openid-connect/token" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "client_id=admin-cli" \
+  -d "username=admin" \
+  -d "password=admin" \
+  -d "grant_type=password"
+
+eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJPWXpvdzk3UENVT1JhdWxxSHYtR3pOdVZ2UTNZODZZWDR5UHFQeHBoNkhJIn0.eyJleHAiOjE3NDc2MDg0MjIsImlhdCI6MTc0NzYwODM2MiwianRpIjoiM2RiZjA2N2YtMzYxNy00YzM2LWE5ZjYtYWViZjcxMjQzNmZjIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9tYXN0ZXIiLCJzdWIiOiI5ZmI2MGRhNi05MzMxLTQ2MTUtODUzYS05Y2M5M2NmNzNkNDgiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJhZG1pbi1jbGkiLCJzZXNzaW9uX3N0YXRlIjoiZTg2YmQwNTMtNDg5ZS00Yjk5LWEzZDctYzk2MTIwMjFmMTA2IiwiYWNyIjoiMSIsInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsInNpZCI6ImU4NmJkMDUzLTQ4OWUtNGI5OS1hM2Q3LWM5NjEyMDIxZjEwNiIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4ifQ.G2QffP2CA-NA4-35zDVh8J075JAWtH5-_ClbHapXIyGbuaYwdd0GG2jGskpDOgcdyiCye_zZE94YXZT2vlKbOqM5LE9gEGjl_JZtclKUHbPhi8rekS7bnNp-g06n9x60k838giDCUJfDWfk_A6UJDbk2tOk8bWuXIRa9hANDagV7xsatXT1-Ffc8fINg1of6g1eT10-UghJDI5pS6laNI69HiTPsd7_yPnv9QstMvoroMrs3tM1j3yXqR_GiVmiXRwdMaLxI9QkVvKTbwQhpmWLwHSzCS0ukxRAnxnu0-mKjCOqSVo5jxr-wMnv-f99EtRD-vo1A9sr-60bt2VUHHA
+
+curl -X POST \
+  "http://localhost:8080/admin/realms/medikall/clients/api-gateway/protocol-mappers/models" \
+  -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJPWXpvdzk3UENVT1JhdWxxSHYtR3pOdVZ2UTNZODZZWDR5UHFQeHBoNkhJIn0.eyJleHAiOjE3NDc2MDg2OTQsImlhdCI6MTc0NzYwODYzNCwianRpIjoiZjBlYTQ4MDAtMTA1Ny00NTJmLWJkOTctM2VlNzZkMDgxMGQ0IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9tYXN0ZXIiLCJzdWIiOiI5ZmI2MGRhNi05MzMxLTQ2MTUtODUzYS05Y2M5M2NmNzNkNDgiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJhZG1pbi1jbGkiLCJzZXNzaW9uX3N0YXRlIjoiN2QzNjFkMmUtMTBhNS00MjY1LTgzYzYtMWVkNWEyMDA2ZWI0IiwiYWNyIjoiMSIsInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsInNpZCI6IjdkMzYxZDJlLTEwYTUtNDI2NS04M2M2LTFlZDVhMjAwNmViNCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4ifQ.AsxTD0hCWx6D8pDa33ebGAbRiILZ0OSqIghWfevrnJou2KqzRr4l5AprD1FpfTPzq-MlvzsDP6cM30B0zUP2VZpRWmYKYkG2-5u7C4NJNLCMTk0SM83jygKSLcA8zhbsNCc2BLQxHUC1vXhBIV4PD_NiNz1CfkOWLE89F3rW5gf74a8yV8WFFr9h8unkVS6DYIHZxlWNZMJagVL8TAs7g1DNq6G9lckEYHr5vTOgUob3Ae3UnuUPTod2iyUCLq3HSGOMEeQh7-M5uXcqRebelTi-ntpmM2Oe3S14hX_mA5ZUd-ibSho9QiG_SJgNLzup7McfSOCuOXEQUgLQ7nVyNQ" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "audience-mapper",
+    "protocol": "openid-connect",
+    "protocolMapper": "oidc-audience-mapper",
+    "config": {
+      "included.client.audience": "api-gateway",
+      "id.token.claim": "true",
+      "access.token.claim": "true"
+    }
+  }'
