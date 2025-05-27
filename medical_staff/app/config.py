@@ -21,6 +21,12 @@ class Settings:
     
     DATABASE_URL = f"{DB_DRIVER}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_DATABASE}" 
     
+    RABBITMQ_URL = os.getenv("RABBITMQ_URL")
+    
+    MEDICAL_STAFF_VALIDATION_QUEUE=os.getenv("MEDICAL_STAFF_VALIDATION_QUEUE")
+    
+
+    
 
 settings = Settings()
 

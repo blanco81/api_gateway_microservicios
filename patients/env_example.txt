@@ -1,0 +1,11 @@
+MICRO_SERVICE_NAME=Medical staff
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=database
+DB_USER=user
+DB_PASSWORD=password
+DB_SCHEMA=schema
+DB_SECRET_KEY=Opcional para utiliza cifrado en las tablas con StringEncryptedType en los modelos
+ALGORITHM=Opcional
+ACCESS_TOKEN_EXPIRE_MINUTES=Opcional
+JWT_SECRET_KEY=Opcional para utilizar JWT

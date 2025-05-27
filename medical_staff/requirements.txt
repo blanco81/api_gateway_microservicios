@@ -11,3 +11,4 @@ itsdangerous
 asyncpg
 psycopg2-binary
 cryptography 
+aio_pika

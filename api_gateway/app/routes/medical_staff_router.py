@@ -3,22 +3,23 @@ import httpx
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.encoders import jsonable_encoder
 from app.security.keycloak import has_role
-from app.schema.request_models import StaffCreate, StaffOut, ShiftCreate, ShiftOut
-from app.config import MEDICAL_STAFF_URL
+from app.schema.medical_staff_request import StaffCreate, StaffOut, ShiftCreate, ShiftOut
+from app.config import settings
 
 router = APIRouter()
 
 # Configuración
 TIMEOUT = 10.0  # Tiempo de espera en segundos
+MICRO_SERVICE_URL=settings.MEDICAL_STAFF_URL
 
 # Configurar logging
 logger = logging.getLogger(__name__)
 
-@router.get("/api/v1/staff/", response_model=list)
+@router.get("/staff", response_model=list)
 async def get_staff_members(user: dict = Depends(has_role("admin"))):    
     try:
         async with httpx.AsyncClient(timeout=TIMEOUT) as client:
-            response = await client.get(f"{MEDICAL_STAFF_URL}/staff/")
+            response = await client.get(f"{MICRO_SERVICE_URL}/staff/")
             response.raise_for_status()
             return response.json()
             
@@ -41,11 +42,11 @@ async def get_staff_members(user: dict = Depends(has_role("admin"))):
             detail="Internal server error"
         )
         
-@router.post("/api/v1/staff/", response_model=StaffOut)
+@router.post("/staff", response_model=StaffOut)
 async def post_staff_members(staff_data: StaffCreate, user: dict = Depends(has_role("admin"))):    
     try:
         async with httpx.AsyncClient(timeout=TIMEOUT) as client:
-            response = await client.post(f"{MEDICAL_STAFF_URL}/staff/",
+            response = await client.post(f"{MICRO_SERVICE_URL}/staff/",
                 json=jsonable_encoder(staff_data))
             response.raise_for_status()
             return response.json()
@@ -69,11 +70,11 @@ async def post_staff_members(staff_data: StaffCreate, user: dict = Depends(has_r
             detail="Internal server error"
         )
 
-@router.get("/api/v1/shift/", response_model=list)
+@router.get("/shift", response_model=list)
 async def get_shift(user: dict = Depends(has_role("admin"))):   
     try:
         async with httpx.AsyncClient(timeout=TIMEOUT) as client:
-            response = await client.get(f"{MEDICAL_STAFF_URL}/shift/")
+            response = await client.get(f"{MICRO_SERVICE_URL}/shift/")
             response.raise_for_status()
             return response.json()
             
@@ -88,11 +89,11 @@ async def get_shift(user: dict = Depends(has_role("admin"))):
             detail=f"Internal server error: {str(e)}"
         )
         
-@router.post("/api/v1/shift/", response_model=ShiftOut)
+@router.post("/shift", response_model=ShiftOut)
 async def post_shift(shift_data: ShiftCreate, user: dict = Depends(has_role("admin"))):   
     try:
         async with httpx.AsyncClient(timeout=TIMEOUT) as client:
-            response = await client.post(f"{MEDICAL_STAFF_URL}/shift/",
+            response = await client.post(f"{MICRO_SERVICE_URL}/shift/",
                 json=jsonable_encoder(shift_data))
             response.raise_for_status()
             return response.json()
@@ -108,11 +109,11 @@ async def post_shift(shift_data: ShiftCreate, user: dict = Depends(has_role("adm
             detail=f"Internal server error: {str(e)}"
         )
 
-@router.get("/api/v1/log/", response_model=list)
+@router.get("/log_medical_staff", response_model=list)
 async def get_log(user: dict = Depends(has_role("admin"))):   
     try:
         async with httpx.AsyncClient(timeout=TIMEOUT) as client:
-            response = await client.get(f"{MEDICAL_STAFF_URL}/log/")
+            response = await client.get(f"{MICRO_SERVICE_URL}/log/")
             response.raise_for_status()
             return response.json()
             

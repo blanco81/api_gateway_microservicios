@@ -11,6 +11,7 @@ services:
     environment:
       MICRO_SERVICE_NAME: API Gateway
       MEDICAL_STAFF_URL: http://medical_staff:8001
+      PATIENTS_URL: http://patients:8002
       
       # Keycloak Config
       KEYCLOAK_SERVER_URL: http://keycloak:8080

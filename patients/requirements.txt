@@ -1,7 +1,14 @@
 fastapi
 uvicorn
 sqlalchemy
-asyncpg
+sqlalchemy-utils
 alembic
 pydantic
 python-dotenv
+nanoid
+pytz
+itsdangerous
+asyncpg
+psycopg2-binary
+cryptography 
+aio_pika
