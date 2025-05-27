@@ -15,7 +15,7 @@ class StaffOut(BaseModel):
     license_number: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class ShiftCreate(BaseModel):
     staff_id: str
@@ -29,7 +29,7 @@ class ShiftOut(BaseModel):
     staff: Optional[StaffOut]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
         
 class LogOut(BaseModel):
     id: str
@@ -39,4 +39,4 @@ class LogOut(BaseModel):
     shift_id: Optional[str]
 
     class Config:
-        orm_mode = True
+        from_attributes = True

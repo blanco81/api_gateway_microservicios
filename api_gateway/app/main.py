@@ -1,9 +1,10 @@
-from fastapi import FastAPI, Request, HTTPException, Depends
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBearer
-from app.routes.router import router
-from app.security.keycloak import verify_token_str, verify_token
+from app.routes.medical_staff_router import router as medical_staff_router
+from app.routes.patients_router import router as patients_router
+from app.security.keycloak import verify_token_str
 from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_403_FORBIDDEN
 import httpx
 from datetime import datetime
@@ -99,8 +100,14 @@ async def auth_middleware(request: Request, call_next):
         )
 
 # Incluir el router principal
-app.include_router(router)
+app.include_router(medical_staff_router, prefix="/api/v1", tags=["Medical Staff"])
+app.include_router(patients_router, prefix="/api/v1", tags=["Patients"])
+
 
 @app.get("/", include_in_schema=False)
 async def root():
     return {"message": "API Service is running"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=False)

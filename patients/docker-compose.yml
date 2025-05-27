@@ -3,24 +3,24 @@ version: "3.9"
 services:
   medical_staff:
     build: .
-    container_name: medical_staff
+    container_name: patients
     restart: always
     ports:
-      - "8001:8001"
+      - "8002:8002"
     environment:
-      MICRO_SERVICE_NAME: "Medical staff"
+      MICRO_SERVICE_NAME: "Patients"
       DB_HOST: medikall-postgres
       DB_PORT: 5432
       DB_DATABASE: medikall
       DB_USER: manager
       DB_PASSWORD: manager
-      DB_SCHEMA: medical_staff_schema
+      DB_SCHEMA: patient_schema
       DB_SECRET_KEY: 5EPR0T0N3C24
       ALGORITHM: HS256
       ACCESS_TOKEN_EXPIRE_MINUTES: 120
       JWT_SECRET_KEY: PR0T0N3C24
       RABBITMQ_URL: amqp://manager:manager@medikall-rabbitmq:5672/
-      MEDICAL_STAFF_VALIDATION_QUEUE: validate_medical_staff    
+      MEDICAL_STAFF_VALIDATION_QUEUE: validate_medical_staff 
     networks:
       - medikall-network
 
